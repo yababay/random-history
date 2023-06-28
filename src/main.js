@@ -15,7 +15,8 @@ document.querySelector('[href="#intro"]').addEventListener('click', e => {
 })
 
 const fade = async (yes, pause = 4500) => {
-    target.classList.remove(yes ? 'unfaded' : 'fadded')
+    target.classList.remove('unfaded')
+    target.classList.remove('faded')
     target.classList.add(yes ? 'faded' : 'unfaded')
     await new Promise(resolve => setTimeout(resolve, pause))
 };
