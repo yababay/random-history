@@ -1,0 +1,36 @@
+:root {
+    --logo-height: 128px;
+    --logo-margin: 1rem;
+    --header-height: calc(var(--logo-height) + var(--logo-margin) * 2 + 1px);
+    --footer-height: 2rem;
+}
+
+body, main, footer, header {
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    grid-area: main;
+}
+
+header {
+    grid-area: header;
+}
+
+footer {
+    grid-area: footer;
+}
+
+body {
+    min-height: 100vh;
+    display: grid;
+    grid-template:
+    "header header header" var(--header-height)
+    ". main ." auto
+    "footer footer footer" var(--footer-height);
+}
+
+aside {
+    display: none;
+}
