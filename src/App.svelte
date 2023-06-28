@@ -5,7 +5,7 @@
   import { Converter } from 'showdown'
 
   export let fade, intro, pictures
-  let counter = 10 + Math.floor(Math.random() * 5)
+  let counter = 11 + Math.floor(Math.random() * 10)
 
   const converter = new Converter()
   let target, control 
@@ -19,7 +19,7 @@
     const url = keys[r]
     await fade(true, 2500)
     target.innerHTML = ''
-    if(counter-- > 0) Reflect.construct(Fact, [{target, props: {converter, url, fade}}])
+    if(counter-- > 1) Reflect.construct(Fact, [{target, props: {converter, url, fade}}])
     else {
       control.classList.add('d-none')
       Reflect.construct(Invite, [{target, props: {fade}}])
@@ -27,6 +27,7 @@
   }
 
   onMount(async () => {
+    if(counter === 13) counter--
     if(window.location.hostname !== 'localhost'){
       keys = (await fetch('/bucket-keys').then(res => res.text())).split('\n')
     }
@@ -36,7 +37,9 @@
 </script>
 
 <div class="control"  bind:this={control}>
-  <button class="btn btn-primary" type="button" on:click={async e => await showMore()}>Случайный факт</button>
+  <button class="btn btn-primary" type="button" on:click={async e => await showMore()}>
+    Случайный факт (осталось {counter})
+  </button>
 </div>
 
 <div bind:this={target} class="holder"></div>
