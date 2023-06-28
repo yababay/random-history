@@ -1,5 +1,6 @@
 main {
     max-width: 80ch;
+    margin: 0 auto;
 }
 
 main article {
@@ -7,8 +8,22 @@ main article {
 }
 
 main article img {
-    width: 100%;
+    width: 80ch;
     margin: 0;
     padding: .5rem;
     border: 1px solid #ddd;
+}
+
+.faded {
+    opacity: 0;
+    transition-duration: 2s;
+}
+
+.unfaded {
+    opacity: 1;
+    transition-duration: 2s;
+}
+
+#intro {
+    margin-top: 2rem;
 }

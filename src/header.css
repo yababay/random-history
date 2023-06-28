@@ -3,12 +3,14 @@
     --h2-font-size: 1.2rem;
     --h1-height: calc(var(--h1-font-size) * 1.5);
     --h2-height: calc(var(--h2-font-size) * 1.5);
+    --list-item-font-size: 1.1rem;
 }
 
 header {
     display: flex;
-    flex-direction: row;
     border-bottom: 1px solid silver;
+    justify-content: space-between;
+    align-items: center;
 }
 
 header figure {
@@ -38,4 +40,21 @@ header section h2 {
     font-size: var(--h2-font-size);
     line-height: var(--h2-height);
     height: var(--h2-height);
+}
+
+header ul {
+    margin-right: 1rem;
+    list-style: none;
+}
+
+header ul li {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin-left: 2rem;
+}
+
+header ul li svg {
+    width: 100%;
+    height: 100%;
 }
