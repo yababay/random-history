@@ -1,12 +1,9 @@
-FROM redis/redis-stack-server
+FROM redis-starter:node
 
-RUN apt update
-RUN apt install wget unzip -y
+COPY build /srv/random-history
 
-WORKDIR /opt
-RUN wget "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
-RUN unzip awscli-exe-linux-x86_64.zip
-RUN ./aws/install
+WORKDIR /
+COPY scripts/svelte.sh .
+RUN chmod +x *.sh
 
-RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-
+ENTRYPOINT ["/svelte.sh"]

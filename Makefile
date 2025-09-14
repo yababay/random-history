@@ -1,5 +1,7 @@
+.PHONY: build
+
 build:
-	docker build . -t redis-starter
+	docker build . -t redis-starter:svelte
 
 publish:
 	docker tag redis-starter:node yababay/redis-starter:node
@@ -13,6 +15,9 @@ node:
 
 records:
 	docker run --rm -d -p 6377:6379 --env-file .env --name redis-starter redis-starter:records
+
+svelte:
+	docker run --rm -d -p 6377:6379 -p 3000:3000 --env-file .env --name redis-starter redis-starter:svelte
 
 bash:
 	docker exec -it redis-starter /bin/bash

@@ -14,7 +14,10 @@
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run",
 		"redis": "redis-cli -p 6377",
-		"psql": "psql -h localhost -U random_history -d random_history"
+		"psql": "psql -h localhost -U random_history -d random_history",
+		"docker:containest": "docker container ls -a",
+		"docker:images": "docker image list",
+		"docker:bash": "docker exec -it redis-starter /bin/bash"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^6.0.0",
