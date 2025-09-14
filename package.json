@@ -1,0 +1,39 @@
+{
+	"name": "random-history",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"bro": "BROWSER=firefox vite dev --open",
+		"build": "vite build",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"test:unit": "vitest",
+		"test": "npm run test:unit -- --run",
+		"redis": "redis-cli -p 6377",
+		"psql": "psql -h localhost -U random_history -d random_history"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-auto": "^6.0.0",
+		"@sveltejs/adapter-node": "^5.3.2",
+		"@sveltejs/kit": "^2.22.0",
+		"@sveltejs/vite-plugin-svelte": "^6.0.0",
+		"@types/pg": "^8.15.5",
+		"@vitest/browser": "^3.2.3",
+		"playwright": "^1.53.0",
+		"svelte": "^5.0.0",
+		"svelte-check": "^4.0.0",
+		"typescript": "^5.0.0",
+		"vite": "^7.0.4",
+		"vitest": "^3.2.3",
+		"vitest-browser-svelte": "^0.1.0"
+	},
+	"dependencies": {
+		"dotenv": "^17.2.2",
+		"pg": "^8.16.3",
+		"redis": "^5.8.2"
+	}
+}
