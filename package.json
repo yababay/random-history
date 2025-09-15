@@ -17,7 +17,11 @@
 		"psql": "psql -h localhost -U random_history -d random_history",
 		"docker:containest": "docker container ls -a",
 		"docker:images": "docker image list",
-		"docker:bash": "docker exec -it redis-starter /bin/bash"
+		"docker:bash": "docker exec -it redis-starter /bin/bash",
+		"docker:stop": "docker container stop redis-starter",
+		"docker:start": "docker run -v /media/portable/.3f-lab/_humanitarian/random-history/.data/:/data --rm -d -p 6377:6379 --env-file .env --name redis-starter redis-starter:random-history",
+		"docker:rh": "docker run --rm -d -p 3000:3000 --name redis-starter redis-starter:random-history",
+		"docker:build": "npm run build && docker build . -t redis-starter:random-history"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^6.0.0",
@@ -37,6 +41,8 @@
 	"dependencies": {
 		"dotenv": "^17.2.2",
 		"pg": "^8.16.3",
-		"redis": "^5.8.2"
+		"redis": "^5.8.2",
+		"telegraf": "^4.16.3",
+		"vk-io": "^4.9.1"
 	}
 }

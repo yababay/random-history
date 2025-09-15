@@ -1,9 +1,5 @@
-FROM redis-starter:node
+FROM redis-starter:svelte
 
+COPY .data/dump.rdb /data
+RUN rm -rf /srv/random-history
 COPY build /srv/random-history
-
-WORKDIR /
-COPY scripts/svelte.sh .
-RUN chmod +x *.sh
-
-ENTRYPOINT ["/svelte.sh"]

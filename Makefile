@@ -1,23 +1,14 @@
 .PHONY: build
 
 build:
-	docker build . -t redis-starter:svelte
-
-publish:
-	docker tag redis-starter:node yababay/redis-starter:node
-	docker push yababay/redis-starter:node
+	docker build . -t redis-starter:random-history
 
 start:
-	docker run --rm -d -p 6377:6379 --env-file .env --name redis-starter redis-starter
+	docker run -v /media/portable/.3f-lab/_humanitarian/random-history/.data/:/data --rm -d -p 6377:6379 --env-file .env --name redis-starter redis-starter:random-history
 
-node:
-	docker run --rm -d -p 6377:6379 --env-file .env --name redis-starter redis-starter:node
-
-records:
-	docker run --rm -d -p 6377:6379 --env-file .env --name redis-starter redis-starter:records
-
-svelte:
-	docker run --rm -d -p 6377:6379 -p 3000:3000 --env-file .env --name redis-starter redis-starter:svelte
+publish:
+	docker tag redis-starter:random-history cr.yandex/crpfd9cholo7rk9upkma/redis-starter:random-history
+	docker push cr.yandex/crpfd9cholo7rk9upkma/redis-starter:random-history
 
 bash:
 	docker exec -it redis-starter /bin/bash
@@ -27,5 +18,3 @@ stop:
 
 status:
 	docker container ls | grep redis-starter
-
-
