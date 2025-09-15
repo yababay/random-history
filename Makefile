@@ -7,6 +7,11 @@ start:
 	docker run -v /media/portable/.3f-lab/_humanitarian/random-history/.data/:/data --rm -d -p 6377:6379 --env-file .env --name redis-starter redis-starter:random-history
 
 publish:
+	docker tag redis-starter:random-history cr.yandex/crp840llo1tumo6tofpn/redis-starter:random-history
+	docker push cr.yandex/crp840llo1tumo6tofpn/redis-starter:random-history
+
+
+publish-mv:
 	docker tag redis-starter:random-history cr.yandex/crpfd9cholo7rk9upkma/redis-starter:random-history
 	docker push cr.yandex/crpfd9cholo7rk9upkma/redis-starter:random-history
 

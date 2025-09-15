@@ -22,7 +22,13 @@ const OPTIONS: MessageOptions = {
 }
 
 export const sendMessage = async (content: RandomHistory) => {
-    let { link, message, tags } = content
+    let { link, message, tags, author } = content
+    if(typeof author === 'string'){
+        const options: MessageOptions = { ...OPTIONS, parse_mode: 'HTML' }
+        const caption = `<blockquote>${message}</blockquote>\n\n${author}.`.replace('..', '.')
+        await TG.sendMessage(channel, caption, options)
+        return
+    }
     tags = Array.isArray(tags) ? tags.join(' ') : tags
     tags = tags?.trim()
     let caption = message.trim() + (tags ? `\n\n${tags}` : '')

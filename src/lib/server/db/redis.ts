@@ -44,9 +44,9 @@ export const getNextRecord = async (collection: string): Promise<RandomHistory> 
     if(keys.length !== 1) throw `no keys for id ${id} in ${collection}`
     const [ key ] = keys
     const props = await client.hGetAll(key)
-    const { link, message, tags } = props
-    if(!(typeof link === 'string' && typeof message === 'string')) throw `bad record ${id}`
-    return { link, message, tags, id, collection }
+    const { link, message, tags, author } = props
+    if(!(typeof link === 'string' && typeof message === 'string' || typeof author === 'string' && typeof message === 'string')) throw `bad record ${id}`
+    return { link, message, tags, id, collection, author }
 }
 
 export const getItems = async (collection: string, page: number = 1) => {
