@@ -20,7 +20,8 @@ export const load = async ({ params }) => {
         if(!id) return
         rec.id = id
     })
-    return { records }
+    const count = Math.ceil(keys.length / rpp)
+    return { records, count }
 }
 
 export const actions = {

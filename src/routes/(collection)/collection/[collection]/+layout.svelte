@@ -2,6 +2,7 @@
 
     import { LayoutWithMenu } from '@yababay67/sveltekit-components'
     import { collectionsMenu, getTitle, type Collection } from '$lib/types'
+	import favicon from '$lib/assets/dice-12.svg'
 
     export let data: { collection: Collection }
 
@@ -27,6 +28,10 @@
     ]
 
 </script>
+
+<svelte:head>
+	<link rel="icon" href={favicon} />
+</svelte:head>
 
 <LayoutWithMenu {brand} {title} {items}>
     <slot />

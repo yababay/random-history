@@ -21,6 +21,10 @@ const OPTIONS: MessageOptions = {
     link_preview_options: {is_disabled: true}
 }
 
+export const tgDebug = async (message: string) => {
+    await TG.sendMessage(TELEGRAM_ADMIN_CHANNEL, message)
+}
+
 export const sendMessage = async (content: RandomHistory) => {
     let { link, message, tags, author } = content
     if(typeof author === 'string'){
