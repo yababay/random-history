@@ -1,0 +1,26 @@
+$space-around: .5rem;
+$margin-top: $space-around * 2;
+$full-height: calc(100% - $space-around - $margin-top);
+
+fieldset {
+    box-sizing: border-box;
+    margin: 0;
+    padding: $space-around;
+    margin: $space-around;
+    border: 1px solid silver;
+    border-radius: $space-around;
+    margin-top: $margin-top;    
+    height: $full-height;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    legend {
+        margin: 0;
+        background-color: white;
+        width: fit-content;
+        padding-inline: $space-around;
+        margin-top: calc($space-around * -2 - 3px);
+        font-size: smaller;
+        color: grey;
+    }
+}

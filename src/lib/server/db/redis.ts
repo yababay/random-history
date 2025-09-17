@@ -1,12 +1,17 @@
 import { createClient, type RedisClientType } from 'redis'
-import { REDIS_PORT, REDIS_PREFIX, RECORDS_PER_PAGE } from '$env/static/private'
+import { REDIS_PORT, REDIS_PREFIX } from '$env/static/private'
 import type { RandomHistory } from '$lib/types'
-
-const rpp = +RECORDS_PER_PAGE
 
 let client: RedisClientType
 
 const url = `redis://localhost:${REDIS_PORT}`
+
+export const getISODate = (date = new Date) => date.toISOString().slice(0, -5)
+
+export const getNextRecordId = async () => {
+    const client = await checkConnection()
+    return await client.incr('random-history:sequence:id')
+}
 
 export const checkConnection = async (): Promise<RedisClientType> => {
     if(!client) client = createClient({url})
@@ -49,7 +54,19 @@ export const getNextRecord = async (collection: string): Promise<RandomHistory> 
     return { link, message, tags, id, collection, author }
 }
 
-export const getItems = async (collection: string, page: number = 1) => {
+export const keyWithDate = (collection: string, id: number | string) => {
+    return `${REDIS_PREFIX}:record:${getISODate()}:${collection}:${id}`
+}
+
+export const keyById = async (id: number | string) => {
+    const client = await checkConnection()
+    const keys = await client.keys(`${REDIS_PREFIX}:record:*:${id}`)
+    if(keys.length !== 1) throw `bad keys for id ${id}`
+    const [ key ] = keys
+    return key
+}
+
+/*export const getItems = async (collection: string, page: number = 1) => {
     const client = await checkConnection()
     const pattern = getItemsKey(collection)
     const keys = await client.keys(pattern)
@@ -62,4 +79,4 @@ export const getItems = async (collection: string, page: number = 1) => {
     tss.sort()
     const arr = tss.slice(from * rpp, page * rpp)
     return await Promise.all(arr.map(ts => byTs.get(ts || '') || '').map(key => client.hGetAll(key)))
-}
+}*/
