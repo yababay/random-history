@@ -7,6 +7,7 @@
 		"dev": "vite dev",
 		"bro": "BROWSER=firefox vite dev --open",
 		"build": "vite build",
+		"git": "read -p 'Суть коммита: ' COMMIT; git add . ; git commit -am $COMMIT ; git push origin scratch",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -22,7 +23,8 @@
 		"docker:stop": "docker container stop redis-starter",
 		"docker:start": "docker run -v /media/portable/.3f-lab/_humanitarian/random-history/.data/:/data --rm -d -p 6377:6379 --env-file .env --name redis-starter redis-starter:random-history",
 		"docker:rh": "docker run --rm -d -p 3000:3000 --env-file .env --name redis-starter redis-starter:random-history",
-		"docker:build": "npm run build && docker build . -t redis-starter:random-history"
+		"docker:build": "npm run build && docker build . -t redis-starter:random-history",
+		"docker:publish": "docker tag redis-starter:random-history cr.yandex/crp840llo1tumo6tofpn/redis-starter:random-history && docker push cr.yandex/crp840llo1tumo6tofpn/redis-starter:random-history"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^6.0.0",

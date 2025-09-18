@@ -16,17 +16,19 @@
                         <input type="radio" class="btn-check" name="collection" id={coll} autocomplete="off" value={coll} checked={ coll === 'cognitive' }>
                         <label class="btn btn-sm btn-outline-primary" for={coll}>{getTitle(coll)}</label>
                     {/each}
-                </div>
+                    <input type="radio" class="btn-check" name="collection" id="vk" autocomplete="off" value="vk">
+                    <label class="btn btn-sm btn-outline-primary" for="vk">ВКонтакте</label>
+            </div>
             </div>
             <div class="col-8 d-flex justify-content-end align-items-center pe-3">
                 <div class="form-check form-switch me-3">
                     <input class="form-check-input" type="checkbox" role="switch" id="admin" name="admin">
                     <label class="form-check-label" for="admin">в адм. канал</label>
                 </div>
-                <div class="form-check form-switch me-5">
+                <!-- div class="form-check form-switch me-5">
                     <input class="form-check-input" type="checkbox" role="switch" id="vk" name="vk">
                     <label class="form-check-label" for="vk">в группу ВК</label>
-                </div>
+                </div -->
                 <button class="btn btn-primary" type="submit">Публиковать</button>
             </div>
         </div>
