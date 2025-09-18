@@ -15,11 +15,20 @@
 
 <section>
     <Header {title} />
-    <Table columns="🖼️ Сообщение Тэги Действ.">
-        {#each records as record}
-            <Row {record} {prefix} />
-        {/each}
-    </Table>
+    {#if collection === 'quotations'}
+        <Table columns="Цитата Автор Действ.">
+            {#each records as record}
+                <Row {record} {prefix} />
+            {/each}
+        </Table>
+    {:else}
+        <Table columns="🖼️ Сообщение Тэги Действ.">
+            {#each records as record}
+                <Row {record} {prefix} />
+            {/each}
+        </Table>
+    {/if}
+
     <Pagination {count} {current} prefix={`/collection/${collection}/page`}/>
 </section>
 

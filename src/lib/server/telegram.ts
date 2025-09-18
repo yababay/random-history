@@ -8,8 +8,6 @@ if(!(TELEGRAM_BOT_TOKEN && TELEGRAM_CHANNEL)) throw 'please setup telegram token
 
 const TG = new Telegram(TELEGRAM_BOT_TOKEN)
 
-const channel = dev ? TELEGRAM_ADMIN_CHANNEL : TELEGRAM_CHANNEL
-
 type MessageOptions = {
     parse_mode: ParseMode,
     caption?: string,
@@ -25,7 +23,8 @@ export const tgDebug = async (message: string) => {
     await TG.sendMessage(TELEGRAM_ADMIN_CHANNEL, message)
 }
 
-export const sendMessage = async (content: RandomHistory) => {
+export const sendMessage = async (content: RandomHistory, admin: boolean = false) => {
+    const channel = (dev || admin) ? TELEGRAM_ADMIN_CHANNEL : TELEGRAM_CHANNEL
     let { link, message, tags, author } = content
     if(typeof author === 'string'){
         const options: MessageOptions = { ...OPTIONS, parse_mode: 'HTML' }

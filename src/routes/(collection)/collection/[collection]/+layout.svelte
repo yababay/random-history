@@ -16,6 +16,11 @@
             items: collectionsMenu
         },
         {
+            title: 'Публиковать',
+            htef:  '/publish',
+            icon:  'caret-right'            
+        },
+        {
             title: 'Github',
             htef:  'https://github.com/yababay/random-history',
             icon:  'github'            

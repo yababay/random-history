@@ -10,7 +10,7 @@ export async function handle({ event, resolve }) {
     const { pathname, hostname } = url
     if(hostname === 'localhost') return await resolve(event)
     if(pathname.startsWith(`/api/${API_KEY}`)) return await resolve(event)
-    if(['/login', '/auth'].includes(pathname)) return await resolve(event)
+    if(['/login', '/auth', '/api/login'].includes(pathname)) return await resolve(event)
     const token = cookies.get('access_token')
     const headers = { 'Authorization': `Oauth ${token}` }
     const { data } = await axios.get(loginUrl, { headers })

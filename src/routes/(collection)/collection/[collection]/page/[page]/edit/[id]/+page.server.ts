@@ -18,12 +18,13 @@ export const actions = {
         const { pathname } = url
         const data = await request.formData()
         const message = data.get('message')?.toString().trim()
+        const author = data.get('author')?.toString().trim()
         const _tags = data.get('tags')?.toString()
         const id = data.get('id')?.toString()
         const vk = data.get('vk')?.toString()
         const collection = data.get('collection')?.toString()
         if(!( id && message && collection)) throw 'no id or message or collection'
-        let tags = []
+        let tags = new Array<string>()
         if(_tags) tags = _tags.split(' ')
             .map((tag: string) => tag.trim())
             .filter((tag: string) => !!tag)
@@ -32,6 +33,7 @@ export const actions = {
         const to = keyWithDate(collection, id)
         const client = await checkConnection()
         await client.hSet(from, 'message', message)
+        if(author) await client.hSet(from, 'author', author)
         if(tags.length) {
             await client.hSet(from, 'tags', tags.join(' '))
             await client.sAdd(`${REDIS_PREFIX}:tags`, tags)

@@ -14,9 +14,16 @@
 </script>
 
 <tr class="tr-height">
-    <td align="center"><img src={link} alt="" class="image-preview"></td>
+    {#if link}
+        <td align="center"><img src={link} alt="" class="image-preview"></td>
+    {/if}
     <td class="td-caption">{@html html}</td>
-    <td class="td-tags">{tags || ''}</td>
+    {#if author}
+        <td class="td-author">{author}</td>
+    {/if}
+    {#if tags}
+        <td class="td-tags">{tags || ''}</td>
+    {/if}
     <td align="center">
         <form method="post">
             <input type="hidden" value={id} name="id">
@@ -38,6 +45,11 @@
         overflow: hidden;
         white-space: nowrap;        
         max-width: 55ch;
+    }
+
+    .td-author {
+        max-width: 25ch;
+        color: gray;
     }
 
     .td-tags {
