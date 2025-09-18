@@ -23,7 +23,7 @@
     form {
         display: grid;
         grid-template-columns: 480px auto;
-        grid-template-rows: 100vh;    
+        grid-template-rows: auto;    
     }
 
     #editor-right {

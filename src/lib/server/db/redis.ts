@@ -10,7 +10,12 @@ export const getISODate = (date = new Date) => date.toISOString().slice(0, -5)
 
 export const getNextRecordId = async () => {
     const client = await checkConnection()
-    return await client.incr('random-history:sequence:id')
+    return await client.incr('random-history:sequence:record')
+}
+
+export const getNextPictureId = async () => {
+    const client = await checkConnection()
+    return await client.incr('random-history:sequence:picture')
 }
 
 export const checkConnection = async (): Promise<RedisClientType> => {
@@ -66,17 +71,33 @@ export const keyById = async (id: number | string) => {
     return key
 }
 
-/*export const getItems = async (collection: string, page: number = 1) => {
+export const saveRecord = async (data: FormData) => {
+    const message = data.get('message')?.toString().trim()
+    const author = data.get('author')?.toString().trim()
+    const _tags = data.get('tags')?.toString()
+    let id = data.get('id')?.toString()
+    if(!id) id = await getNextRecordId() + ''
+    const link = data.get('link')?.toString()
+    const vk = data.get('vk')?.toString()
+    const collection = data.get('collection')?.toString()
+    console.log(id, message, collection, link, author, vk)
+    if(!( id && message && collection)) throw 'no id or message or collection'
+    let tags = new Array<string>()
+    if(_tags) tags = _tags.split(' ')
+        .map((tag: string) => tag.trim())
+        .filter((tag: string) => !!tag)
+        .map((tag: string) => `#${tag}`)
+    const from = id ? await keyById(id) : `${REDIS_PREFIX}:record:new`
+    const to = keyWithDate(collection, id)
     const client = await checkConnection()
-    const pattern = getItemsKey(collection)
-    const keys = await client.keys(pattern)
-    const tss = (await Promise.all(keys.map(key => client.hGet(key, 'ts')))).filter(ts => !!ts)
-    const byTs = new Map<string, string>(tss.map((ts, i) => [ts || '', keys[i] || '']))
-    const maxPage = Math.ceil(tss.length / rpp)
-    if(page > maxPage) page = maxPage
-    let from = page - 1
-    if(from < 0) from = 0
-    tss.sort()
-    const arr = tss.slice(from * rpp, page * rpp)
-    return await Promise.all(arr.map(ts => byTs.get(ts || '') || '').map(key => client.hGetAll(key)))
-}*/
+    await client.hSet(from, 'message', message)
+    if(link) await client.hSet(from, 'link', link)
+    if(author) await client.hSet(from, 'author', author)
+    if(tags.length) {
+        await client.hSet(from, 'tags', tags.join(' '))
+        await client.sAdd(`${REDIS_PREFIX}:tags`, tags)
+    }
+    await client.rename(from, to)
+    if(vk) await client.lPush(`${REDIS_PREFIX}:collection:vk`, id)
+    return id
+}
