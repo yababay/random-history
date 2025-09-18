@@ -1,9 +1,7 @@
-//import { createReadStream } from 'fs'
-//import { decode } from 'js-base64'
+import { dev } from '$app/environment'
 import { toByteArray } from 'base64-js'
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { 
-    //TUMBLR_ROOT_PATH, 
     AWS_ACCESS_KEY_ID,
     AWS_SECRET_ACCESS_KEY,
     AWS_DEFAULT_BUCKET,
@@ -12,7 +10,6 @@ import {
 
 } from '$env/static/private'
 
-//const TUMBLR_MEDIA_PATH = `${TUMBLR_ROOT_PATH}/public/media`
 const Bucket = AWS_DEFAULT_BUCKET
 
 const s3Client = new S3Client({ 
@@ -29,14 +26,6 @@ export async function uploadFromBlob(body: string, fileName: number, extension: 
     const Key = `media/${fileName}.${extension}`
     const command = new PutObjectCommand({ Bucket, Key, Body})
     await s3Client.send(command)
-    console.log(`${Key}`, 'is uploaded')
+    if(dev) console.log(`${Key}`, 'is uploaded')
     return Key
 }
-
-/*export async function uploadFromTumblr(picture: string){
-    const Key = `media/${picture}`
-    const Body = createReadStream(`${TUMBLR_MEDIA_PATH}/${picture}`)
-    const command = new PutObjectCommand({ Bucket, Key, Body})
-    await s3Client.send(command)
-    console.log(`${picture}`, 'is uploaded')
-}*/

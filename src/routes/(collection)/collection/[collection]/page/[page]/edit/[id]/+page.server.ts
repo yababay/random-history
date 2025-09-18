@@ -18,8 +18,8 @@ export const actions = {
         const { pathname } = url
         const data = await request.formData()
         const id = await saveRecord(data)
-        const lastSlash = pathname.indexOf('/edit')
         if(dev) console.log(`record with id ${id} is saved`)
+        const lastSlash = pathname.indexOf('/edit')
         throw redirect(302, pathname.slice(0, lastSlash))
     }
 }

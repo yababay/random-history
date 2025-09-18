@@ -76,18 +76,17 @@ export const saveRecord = async (data: FormData) => {
     const author = data.get('author')?.toString().trim()
     const _tags = data.get('tags')?.toString()
     let id = data.get('id')?.toString()
-    if(!id) id = await getNextRecordId() + ''
     const link = data.get('link')?.toString()
-    const vk = data.get('vk')?.toString()
+    const vk = !!data.get('vk')?.toString()
     const collection = data.get('collection')?.toString()
-    console.log(id, message, collection, link, author, vk)
-    if(!( id && message && collection)) throw 'no id or message or collection'
+    if(!(message && collection)) throw 'no id or message or collection'
     let tags = new Array<string>()
     if(_tags) tags = _tags.split(' ')
         .map((tag: string) => tag.trim())
         .filter((tag: string) => !!tag)
         .map((tag: string) => `#${tag}`)
-    const from = id ? await keyById(id) : `${REDIS_PREFIX}:record:new`
+    const from = id ? (await keyById(id)) : `${REDIS_PREFIX}:record:new`
+    if(!id) id = await getNextRecordId() + ''
     const to = keyWithDate(collection, id)
     const client = await checkConnection()
     await client.hSet(from, 'message', message)
