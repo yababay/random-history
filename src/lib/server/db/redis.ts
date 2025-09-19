@@ -1,6 +1,7 @@
 import { createClient, type RedisClientType } from 'redis'
 import { REDIS_PORT, REDIS_PREFIX } from '$env/static/private'
 import type { RandomHistory } from '$lib/types'
+import { restoreFromBucket } from '../s3'
 
 let client: RedisClientType
 
@@ -20,7 +21,9 @@ export const getNextPictureId = async () => {
 
 export const checkConnection = async (): Promise<RedisClientType> => {
     if(!client) client = createClient({url})
-    if(!client.isOpen) await client.connect()
+    if(client.isOpen) return client
+    //await restoreFromBucket()
+    await client.connect()
     return client
 }
 
@@ -98,5 +101,6 @@ export const saveRecord = async (data: FormData) => {
     }
     await client.rename(from, to)
     if(vk) await client.lPush(`${REDIS_PREFIX}:collection:vk`, id)
+    await client.bgSave()
     return id
 }

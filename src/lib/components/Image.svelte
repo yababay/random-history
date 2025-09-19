@@ -1,6 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte'
     import { src, smartSrc, blob, STUB, uploaded } from './store'
+    import { PUBLIC_PICTURE_BASE } from '$env/static/public'
 
     export let link: string = STUB
 
@@ -22,8 +23,8 @@
             if (!type.startsWith('image/')) return
             $src = URL.createObjectURL(clipboardItem)  
             $blob = clipboardItem
-            const srcUpdate =await $uploaded 
-            if(typeof srcUpdate === 'string') pictureInput.value = srcUpdate
+            const srcUpdate = await $uploaded 
+            if(typeof srcUpdate === 'string') pictureInput.value = `${PUBLIC_PICTURE_BASE}/${srcUpdate}`
             e.preventDefault();
         })
     })

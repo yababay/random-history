@@ -1,5 +1,5 @@
 import { writable, derived } from "svelte/store"
-//import { PUBLIC_PICTURE_BASE } from '$env/static/public'
+import { PUBLIC_PICTURE_BASE } from '$env/static/public'
 
 export const STUB = '/stub.png'
 
@@ -7,7 +7,8 @@ export const src = writable<string | null>(null)
 
 export const smartSrc = derived(src, $src => {
     if(!$src) return STUB
-    //if($src.includes('media/')) return `${PUBLIC_PICTURE_BASE}/${src}`
+    console.log($src)
+    if($src.includes('media/')) return `${PUBLIC_PICTURE_BASE}/${$src}`
     if($src.includes('youtube')){
         let arr: Array<string> | null = /.*v=([^\=\&]+)/.exec($src)
         return arr ? `https://www.youtube.com/embed/${arr[1]}` : STUB
