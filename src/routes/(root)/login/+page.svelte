@@ -1,4 +1,4 @@
-<iframe src="/api/login"></iframe>
+<iframe src="/api/login" title="yandex authorization"></iframe>
 
 <style lang="scss">
     iframe {

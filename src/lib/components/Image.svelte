@@ -30,7 +30,7 @@
 </script>
 
 {#if $smartSrc.includes('youtube')}
-    <iframe width="560" height="340" src={$smartSrc} title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <iframe width="560" height="340" src={$smartSrc} title="youtube" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 {:else}
     <!-- svelte-ignore a11y-missing-attribute -->
     <img bind:this={image} class="note-image" />
@@ -42,7 +42,7 @@
         height: auto;
         width: auto;
         max-height: 70vh;
-        max-width: 480px; //calc(50vw - 10rem);
+        max-width: 480px;
         margin: 0 auto;
     }
 </style>
