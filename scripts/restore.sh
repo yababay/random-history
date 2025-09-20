@@ -1,6 +1,9 @@
 #!/bin/bash
 
 DUMP=dump.rdb
+
+curl https://bba648a99ldqe5v3f10h.containers.yandexcloud.net/api/2028e1e6-916b-11f0-b23d-7be7537085b4/backup
+
 LAST_BACKUP=`/usr/local/bin/aws --endpoint-url='https://storage.yandexcloud.net' s3 ls 's3://random-history/backup/' | egrep -o 'dump-.*\.rdb' | sort -r | head -n 1`
 
 if [ -n "`docker container ls | grep redis-starter`" ]; then

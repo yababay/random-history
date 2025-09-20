@@ -36,11 +36,11 @@
 {:else}
     <Slots>
         <div slot="left" class="w-100 h-100 d-flex flex-direction-column justify-content-center align-items-center">
-            <img src={link} alt="preview" class="w-100 p-3">
-            <!-- input name="link" type="hidden" value={link}/ -->
-            <!-- Image {link} / --> 
             {#if id}
+                <img src={link} alt="preview" class="w-100 p-3">
                 <input name="id" type="hidden" value={id}/>
+            {:else}
+                <Image {link} /> 
             {/if}
         </div>
         <div slot="right" class="w-100 h-100 d-flex flex-direction-column justify-content-center align-items-center">

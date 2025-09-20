@@ -1,9 +1,11 @@
 #!/bin/bash
 
-LAST_BACKUP=`ls -1 /mnt/backup | egrep -o 'dump-.*\.rdb' | sort -r | head -n 1`
+BACKUP_DIR="/mnt/backup"
+BACKUP_FILE=`[ -d "$BACKUP_DIR" ] && ls -1 "$BACKUP_DIR" | egrep -o 'dump-.*\.rdb' | sort -r | head -n 1`
+LATEST_BACKUP="$BACKUP_DIR/$BACKUP_FILE"
 
-if [ -f "$LAST_BACKUP" ]; then
-    cp "$LAST_BACKUP" /data
+if [ -f "$LATEST_BACKUP" ]; then
+    cp "$LATEST_BACKUP" /data/dump.rdb
 fi
 
 /entrypoint.sh 1>/dev/null 2>/dev/null &

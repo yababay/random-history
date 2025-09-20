@@ -1,11 +1,28 @@
 import { createClient, type RedisClientType } from 'redis'
 import { REDIS_PORT, REDIS_PREFIX } from '$env/static/private'
-import type { RandomHistory } from '$lib/types'
+import type { RandomHistory, Collection } from '$lib/types'
 import { restoreFromBucket } from '../s3'
 
 let client: RedisClientType
 
 const url = `redis://localhost:${REDIS_PORT}`
+
+export const distillCollection = async (coll: Collection) => {
+    const used = new Set<string>()
+    const pure = new Array<string>()
+    const client = await checkConnection()
+    const key = getCollectionKey(coll)
+    const arr = await client.lRange(key, 0, 10000) 
+    for(const id of arr) {
+        if(!id || used.has(id)) continue
+        used.add(id)
+        pure.push(id)
+    } 
+    const tmp = key + ':tmp'
+    await client.lPush(tmp, arr)
+    await client.del(key)
+    await client.rename(tmp, key)
+}
 
 export const getISODate = (date = new Date) => date.toISOString().slice(0, -5)
 
@@ -101,6 +118,7 @@ export const saveRecord = async (data: FormData) => {
     }
     await client.rename(from, to)
     if(vk) await client.lPush(`${REDIS_PREFIX}:collection:vk`, id)
+    await distillCollection(collection)
     await client.bgSave()
     return id
 }
