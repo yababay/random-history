@@ -1,7 +1,7 @@
 import { existsSync, writeFileSync } from 'fs'
 import { API_KEY, USED_KEYS_FN } from '$env/static/private'
 import { sendMessage, checkConnection, getCollectionKey, keyById } from '$lib/server'
-import { chatPost } from '$lib/server/vk/upload'
+import { chatPost } from '$lib/server/vk'
 
 const backupDir = USED_KEYS_FN.substring(0, USED_KEYS_FN.lastIndexOf('/'))
 

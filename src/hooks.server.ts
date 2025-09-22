@@ -16,7 +16,6 @@ if(!building){
         for(const key of Reflect.ownKeys(usedKeys)){
             if(typeof key !== 'string') continue
             const arr = Reflect.get(usedKeys, key)
-            if(!Array.isArray(arr)) continue
             const coll = key as Collection
             await distillCollection(coll, arr)
         }

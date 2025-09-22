@@ -2,7 +2,7 @@ import fs from 'fs'
 import axios from 'axios'
 import { VK } from 'vk-io'
 import { VK_API_GROUP_KEY, VK_GROUP_ID, VK_DEFAULT_CHAT } from '$env/static/private'
-import { checkConnection } from '../db/redis'
+import { checkConnection } from './redis'
 
 const client = await checkConnection()
 //const apiPrefix = 'https://api.vk.com/method'
