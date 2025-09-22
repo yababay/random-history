@@ -19,14 +19,16 @@
 		"redis": "redis-cli -p 6377",
 		"restore": "./scripts/restore.sh",
 		"psql": "psql -h localhost -U random_history -d random_history",
+		"docker:commit": "docker commit -a 'Michael Belyakov' -m 'update' redis-starter redis-starter:node",
 		"docker:containest": "docker container ls -a",
 		"docker:images": "docker image list",
 		"docker:bash": "docker exec -it redis-starter /bin/bash",
 		"docker:stop": "docker container stop redis-starter",
 		"docker:start": "docker run -v /media/portable/.3f-lab/_humanitarian/random-history/.data/:/data --rm -d -p 6377:6379 --env-file .env --name redis-starter redis-starter:random-history",
+		"docker:db": "docker run -v /media/portable/.3f-lab/_humanitarian/random-history/.data/:/data --rm -d -p 6377:6379 --env-file .env --name redis-starter redis-starter:node",
 		"docker:rh": "docker run --rm -d -p 3000:3000 --env-file .env --name redis-starter redis-starter:random-history",
-		"docker:build": "npm run build && docker build . -t redis-starter:random-history",
-		"docker:publish": "docker tag redis-starter:random-history cr.yandex/crp840llo1tumo6tofpn/redis-starter:random-history && docker push cr.yandex/crp840llo1tumo6tofpn/redis-starter:random-history"
+		"docker:build": "npm run build && docker build . -t random-history:latest",
+		"docker:publish": "docker tag random-history:latest cr.yandex/crp840llo1tumo6tofpn/random-history:latest && docker push cr.yandex/crp840llo1tumo6tofpn/random-history:latest"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^6.0.0",

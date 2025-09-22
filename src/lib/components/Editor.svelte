@@ -20,19 +20,23 @@
 </script>
 
 {#if collection === 'quotations'}
-    <Fieldset {legend} >
-        <div class="w-100 d-flex align-items-start mt-3 ps-3 pe-3">
-            <label for="message" class="w-25">Сообщение</label>
-            <Textarea value={message} {rows} name="message" />
-        </div>
-        <div class="w-100 d-flex align-items-end mt-3 mb-3 ps-3 pe-3">
-            <label for="author" class="w-25 mb-2">Автор</label>
-            <WideInput name="author" value={author} /> 
-        </div>
-        <div class="w-100 d-flex align-items-start mt-3 mb-3 ps-3 pe-3">
-            <Submit></Submit>
-        </div>
-    </Fieldset>
+    <form method="post" class="w-100 d-flex justify-content-center">
+        <input name="id" type="hidden" value={id}/>
+        <input name="collection" type="hidden" value={collection}/>
+        <Fieldset {legend} >
+            <div class="w-100 d-flex align-items-start mt-3 ps-3 pe-3">
+                <label for="message" class="w-25">Сообщение</label>
+                <Textarea value={message} {rows} name="message" />
+            </div>
+            <div class="w-100 d-flex align-items-end mt-3 mb-3 ps-3 pe-3">
+                <label for="author" class="w-25 mb-2">Автор</label>
+                <WideInput name="author" value={author} /> 
+            </div>
+            <div class="w-100 d-flex align-items-start mt-3 mb-3 ps-3 pe-3">
+                <Submit></Submit>
+            </div>
+        </Fieldset>
+    </form>
 {:else}
     <Slots>
         <div slot="left" class="w-100 h-100 d-flex flex-direction-column justify-content-center align-items-center">

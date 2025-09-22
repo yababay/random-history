@@ -7,7 +7,7 @@ export type MenuItem = {
 
 export type MenuItems = MenuItem[]
 
-export type Collection = 'artefacts' | 'art' | 'photo' | 'quotations' | 'funny' | 'maps' | 'cognitive' | 'drafts'
+export type Collection = 'artefacts' | 'art' | 'photo' | 'quotations' | 'funny' | 'maps' | 'cognitive' | 'drafts' | 'vk'
 
 export const COLLECTIONS = ['artefacts', 'art', 'photo', 'quotations', 'funny', 'maps', 'cognitive', 'drafts'] as Collection[]
 
@@ -59,3 +59,5 @@ export const collectionsMenu = COLLECTIONS.map(el => {
     const href = `/collection/${el}`
     return { icon, title, href }
 })
+
+export type UsedKeys = {[key: string]: string[]}

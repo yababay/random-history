@@ -1,27 +1,26 @@
 import { createClient, type RedisClientType } from 'redis'
 import { REDIS_PORT, REDIS_PREFIX } from '$env/static/private'
-import type { RandomHistory, Collection } from '$lib/types'
-import { restoreFromBucket } from '../s3'
+import type { Collection } from '$lib/types'
 
 let client: RedisClientType
 
 const url = `redis://localhost:${REDIS_PORT}`
 
-export const distillCollection = async (coll: Collection) => {
+export const distillCollection = async (coll: Collection, arr: string[] = []) => {
     const used = new Set<string>()
     const pure = new Array<string>()
     const client = await checkConnection()
     const key = getCollectionKey(coll)
-    const arr = await client.lRange(key, 0, 10000) 
+    if(!arr.length) arr = await client.lRange(key, 0, 10000) 
     for(const id of arr) {
         if(!id || used.has(id)) continue
         used.add(id)
         pure.push(id)
     } 
     const tmp = key + ':tmp'
-    await client.lPush(tmp, arr)
-    await client.del(key)
+    await client.lPush(tmp, pure)
     await client.rename(tmp, key)
+    return pure
 }
 
 export const getISODate = (date = new Date) => date.toISOString().slice(0, -5)
@@ -39,16 +38,22 @@ export const getNextPictureId = async () => {
 export const checkConnection = async (): Promise<RedisClientType> => {
     if(!client) client = createClient({url})
     if(client.isOpen) return client
-    //await restoreFromBucket()
     await client.connect()
     return client
 }
 
 const getKey = (postfix: string) => `${REDIS_PREFIX}:${postfix}`
-const getCollectionKey = (collection: string) => getKey(`collection:${collection}`)
 const getTagsKey = () => getKey('tags')
-const getItemKey  = (collection: string, id: number | string) => getKey(`record:${collection}:${id}`)
-const getItemsKey = (collection: string) => getItemKey(collection, '*')
+
+export const getCollectionKey = (collection: string): string => getKey(`collection:${collection}`)
+export const getUpdateKey = (suffix = 'latest') => getKey('update:' + suffix)
+
+export const setLatestUpdate = async () => {
+    const client = await checkConnection()
+    const [ key, value ] = [getUpdateKey(), new Date().toISOString()]
+    await client.set(key, value)
+    await client.expire(key, 60)
+}
 
 export const saveTags = async (key: string, tags: string[]) => {
     tags = tags.filter(el => el && el.trim())
@@ -62,21 +67,6 @@ export const saveTags = async (key: string, tags: string[]) => {
 export const getTags = async () => {
     const client = await checkConnection()
     return (await client.sMembers(getTagsKey())).sort()
-}
-
-export const getNextRecord = async (collection: string): Promise<RandomHistory> => {
-    const listKey = getCollectionKey(collection)
-    const client = await checkConnection()
-    const _id = await client.rPopLPush(listKey, listKey)
-    if(!_id) throw `no id in ${collection}`
-    const id = +_id
-    const keys = await client.keys(`${REDIS_PREFIX}:*:${id}`)
-    if(keys.length !== 1) throw `no keys for id ${id} in ${collection}`
-    const [ key ] = keys
-    const props = await client.hGetAll(key)
-    const { link, message, tags, author } = props
-    if(!(typeof link === 'string' && typeof message === 'string' || typeof author === 'string' && typeof message === 'string')) throw `bad record ${id}`
-    return { link, message, tags, id, collection, author }
 }
 
 export const keyWithDate = (collection: string, id: number | string) => {
@@ -117,8 +107,7 @@ export const saveRecord = async (data: FormData) => {
         await client.sAdd(`${REDIS_PREFIX}:tags`, tags)
     }
     await client.rename(from, to)
-    if(vk) await client.lPush(`${REDIS_PREFIX}:collection:vk`, id)
-    await distillCollection(collection)
+    await client.lPush(getCollectionKey(collection), id + '')
     await client.bgSave()
     return id
 }

@@ -35,6 +35,16 @@ export async function uploadFromBlob(body: string, fileName: number, extension: 
 const bucketName = "random-history";
 const keyName = "backup/dump.rdb"; // The path to the file in your S3 bucket
 
+export async function uploadBackup(body: string, fileName: number, extension: string){
+  const Body = toByteArray(body)
+  const Key = `media/${fileName}.${extension}`
+  const command = new PutObjectCommand({ Bucket, Key, Body})
+  await s3Client.send(command)
+  if(dev) console.log(`${Key}`, 'is uploaded')
+  return Key
+}
+
+
 export const restoreFromBucket = async () => {
     if(fs.existsSync('.svelte-kit')) return
   try {

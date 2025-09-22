@@ -14,4 +14,4 @@ fi
 rm -rf .data/$DUMP
 cp "`pwd`/.data/$LAST_BACKUP" "`pwd`/.data/$DUMP"
 
-docker run -v /media/portable/.3f-lab/_humanitarian/random-history/.data/:/data --rm -d -p 6377:6379 --env-file .env --name redis-starter redis-starter:random-history
+docker run -v /media/portable/.3f-lab/_humanitarian/random-history/.data/:/data --rm -d -p 6377:6379 --env-file .env --name redis-starter redis-starter:node
