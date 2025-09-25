@@ -2,7 +2,8 @@
   "compilerOptions":
   {
     "target": "ESNext",
-    "module": "commonjs",
+//    "module": "es2022",
+   "module": "commonjs",
 //    "module": "ESNext",
     "esModuleInterop": true,  /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
     "moduleResolution": "node",
@@ -10,6 +11,6 @@
     "sourceMap": true,
     "removeComments": true
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "scripts/pump.js", "scripts/table.ts", "scripts/driver.ts", "scripts/pump.ts"],
   "exclude": ["node_modules"],
 }

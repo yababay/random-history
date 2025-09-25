@@ -2,13 +2,14 @@
   "name": "random-history-starter",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "tsc",
-    "deploy": "tsc && .\\deploy\\deploy-compress.bat\n",
+    "deploy": "tsc && scripts/create-func-ver.sh",
     "test": "ts-node ./src/ImageCompress.ts",
     "setup-backet": "ts-node ./setup/setup-backet.ts",
-    "driver": "ts-node ./src/index-local.ts",
+    "psql": "psql -h localhost -U random_history -d random_history",
+    "pump": "ts-node scripts/pump.ts",
     "lint": "eslint src/**/*.ts",
     "format": "eslint src/**/*.ts --fix",
     "clear-node_modules": "rimraf .\\**\\node_modules"
@@ -18,6 +19,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^14.14.35",
+    "@types/pg": "^8.15.5",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
     "eslint": "^7.22.0",
@@ -30,6 +32,7 @@
   },
   "dependencies": {
     "dotenv": "^16.0.0",
+    "pg": "^8.16.3",
     "uuid": "^8.3.2",
     "ydb-sdk": "^5.11.1"
   }
