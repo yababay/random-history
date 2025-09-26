@@ -1,46 +1,56 @@
-import { YC } from './yc'; 
-import { getYDBDriver } from './ydb'
-
-const { ENDPOINT, DATABASE, TOKEN } = process.env
-
-if(!(ENDPOINT && DATABASE)) throw 'bad env'
+import { YC } from './yc'
+import { sendMessage } from './src/lib/server/telegram';
+import { getDriver, getNextRow, setLatest } from './src/lib/server/ydb'
 
 export async function handler(event: YC.CloudFunctionsHttpEvent) {
-  const { collection } = event.queryStringParameters;
 
-  if (!collection) {
+  const { queryStringParameters } = event
+
+  let collection: string
+
+  if (queryStringParameters && typeof queryStringParameters.collection === 'string') collection = queryStringParameters.collection
+  else {
+    const details = Reflect.get(event, 'details')
+    if(details && typeof details === 'object') collection = Reflect.get(details, 'payload')
+  }
+
+  if(!collection) {
     return {
       statusCode: 400,
-      headers: { 'Content-Type': 'application/json; charset=utf-8' },
-      body: { error: 'Вам необходимо указать параметр collection' },
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+      body: `Функции не переданы параметры`,
       isBase64Encoded: false,
     };
   }
 
-  const driver = await getYDBDriver(ENDPOINT, DATABASE, TOKEN);
+  if (!collection) {
+    return {
+      statusCode: 400,
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+      body: `Необходимо указать параметр collection: ${queryStringParameters}`,
+      isBase64Encoded: false,
+    };
+  }
 
-  let id = -1
+  const driver = await getDriver();
 
-  await driver.tableClient.withSession(async (session) => {
-    const query = `select id from messages order by ts desc limit 1`
-    const { resultSets } = await session.executeQuery(query);
-    const [ resultSet ]  = resultSets
-    const { rows } = resultSet
-    const [ row ] = rows
-    const { items } = row
-    const [ item ] = items
-    const { int32Value } = item
-    id = int32Value
-  });
+  const id = await driver.tableClient.withSession(async (session) => {
+    const record = await getNextRow(session, collection)
+    const { id } = record
+    await sendMessage(record)
+    await setLatest(session, id)
+    return id
+  })
 
-  await driver.destroy();
+  await driver.destroy()
 
   return {
     statusCode: 200,
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
     },
-    body: { info: `Выбрана запись с id=${id}` },
+    body: { id, collection },
     isBase64Encoded: false,
   };
 }
+

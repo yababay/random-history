@@ -1,13 +1,13 @@
 import { Telegram } from 'telegraf'
 import type { ParseMode } from 'telegraf/types'
 import type { RandomHistoryRecord } from '../types'
-import dotenv from 'dotenv'
+//import dotenv from 'dotenv'
 
-dotenv.config()
+//dotenv.config()
 
 const { TELEGRAM_BOT_TOKEN, TELEGRAM_CHANNEL, TELEGRAM_ADMIN_CHANNEL } = process.env
 
-if(!(TELEGRAM_BOT_TOKEN && TELEGRAM_CHANNEL && TELEGRAM_ADMIN_CHANNEL)) throw 'please setup telegram token and channel'
+if(!(TELEGRAM_BOT_TOKEN && (TELEGRAM_CHANNEL || TELEGRAM_ADMIN_CHANNEL))) throw 'please setup telegram token and channel'
 
 const TG = new Telegram(TELEGRAM_BOT_TOKEN)
 
@@ -27,7 +27,7 @@ export const tgDebug = async (message: string) => {
 }
 
 export const sendMessage = async (content: RandomHistoryRecord) => {
-    const channel = TELEGRAM_ADMIN_CHANNEL //: TELEGRAM_CHANNEL
+    const channel = TELEGRAM_ADMIN_CHANNEL || TELEGRAM_CHANNEL
     let { link, message, tags, author } = content
     if(typeof author === 'string'){
         const options: MessageOptions = { ...OPTIONS, parse_mode: 'HTML' }

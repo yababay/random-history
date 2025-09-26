@@ -7,8 +7,9 @@
     "moduleResolution": "node",
     "outDir": "dist",
     "sourceMap": true,
+    "skipLibCheck": true,
     "removeComments": true
   },
-  "include": ["src/**/*.ts", "yc.d.ts", "index.ts"],
-  "exclude": ["node_modules", "scripts"],
+  "include": [ "src/**/*.ts", "yc.d.ts", "index.ts" ],
+  "exclude": [ "node_modules", "scripts", "ydb.ts" ],
 }

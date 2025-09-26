@@ -6,7 +6,7 @@ source .env
  
 echo "npx tsc --build tsconfig.json"
 npx tsc --build tsconfig.json
-cp package.json ./dist/package.json
+cp package-pure.json ./dist/package.json
 
 # сделать архив
 cd ./dist
@@ -26,4 +26,4 @@ yc serverless function version create \
   --source-path ./build/func.zip \
   --service-account-id="$SERVICE_ACCOUNT_ID" \
   --folder-id $FOLDER_ID \
-  --environment "ENDPOINT=$ENDPOINT,DATABASE=$DATABASE,TOKEN=$YDB_ACCESS_TOKEN_CREDENTIALS"
+  --environment "ENDPOINT=$ENDPOINT,DATABASE=$DATABASE,YDB_ACCESS_TOKEN_CREDENTIALS=$YDB_ACCESS_TOKEN_CREDENTIALS,TELEGRAM_BOT_TOKEN=$TELEGRAM_BOT_TOKEN,TELEGRAM_CHANNEL=$TELEGRAM_CHANNEL,YANDEX_OAUTH_TOKEN=$YANDEX_OAUTH_TOKEN"
