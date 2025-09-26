@@ -1,6 +1,6 @@
 #!/bin/bash
-rm -R ./build
-rm -R ./dist
+rm -rf ./build
+rm -rf ./dist
 mkdir build
 source .env
  
@@ -26,4 +26,4 @@ yc serverless function version create \
   --source-path ./build/func.zip \
   --service-account-id="$SERVICE_ACCOUNT_ID" \
   --folder-id $FOLDER_ID \
-  --environment "ENDPOINT=$ENDPOINT,DATABASE=$DATABASE"
+  --environment "ENDPOINT=$ENDPOINT,DATABASE=$DATABASE,TOKEN=$YDB_ACCESS_TOKEN_CREDENTIALS"

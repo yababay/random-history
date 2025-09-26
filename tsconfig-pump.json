@@ -5,10 +5,10 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "outDir": "dist",
+    "outDir": ".dist",
     "sourceMap": true,
     "removeComments": true
   },
-  "include": ["src/**/*.ts", "yc.d.ts", "index.ts"],
-  "exclude": ["node_modules", "scripts"],
+  "include": [ "yc.d.ts", "scripts/pump.ts", "src/**/*.ts" ],
+  "exclude": [ "node_modules", "scripts" ],
 }

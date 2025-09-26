@@ -2,17 +2,19 @@
   "name": "random-history-starter",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "deploy": "tsc && scripts/create-func-ver.sh",
+    "deploy": "tsc && scripts/deploy.sh",
     "test": "ts-node ./src/ImageCompress.ts",
     "setup-backet": "ts-node ./setup/setup-backet.ts",
+    "ys:iam": "yc iam create-token",
     "psql": "psql -h localhost -U random_history -d random_history",
-    "pump": "ts-node scripts/pump.ts",
+    "pump": "ts-node --project tsconfig-pump.json scripts/pump.ts",
+    "msg": "ts-node --project tsconfig-pump.json scripts/message.ts",
+    "quot": "ts-node --project tsconfig-pump.json scripts/quotations.ts",
     "lint": "eslint src/**/*.ts",
-    "format": "eslint src/**/*.ts --fix",
-    "clear-node_modules": "rimraf .\\**\\node_modules"
+    "format": "eslint src/**/*.ts --fix"
   },
   "keywords": [],
   "author": "Gayrat Vlasov",
@@ -31,8 +33,11 @@
     "typescript": "^4.6.3"
   },
   "dependencies": {
+    "@yandex-cloud/nodejs-sdk": "^2.9.0",
+    "axios": "^1.12.2",
     "dotenv": "^16.0.0",
     "pg": "^8.16.3",
+    "telegraf": "^4.16.3",
     "uuid": "^8.3.2",
     "ydb-sdk": "^5.11.1"
   }
