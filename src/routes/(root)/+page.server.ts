@@ -1,5 +1,5 @@
 import { dev } from '$app/environment'
-import { saveRecord } from "$lib/server"
+import { saveRecord } from "$lib/server.prev"
 
 export const actions = {
     default: async ({ request }) => {

@@ -1,0 +1,6 @@
+{
+    "brandStub": "Привет!",
+    "itemsStub": [
+        {"title": "Вход", "href": "/login", "icon": "person-check-fill"}
+    ]
+}

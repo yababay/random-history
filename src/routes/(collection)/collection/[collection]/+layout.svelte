@@ -2,7 +2,7 @@
 
     import { LayoutWithMenu } from '@yababay67/sveltekit-components'
     import { collectionsMenu, getTitle, type Collection } from '$lib/types'
-	import favicon from '$lib/assets/dice-12.svg'
+	import favicon from '$lib/assets/favicon.svg'
 
     export let data: { collection: Collection }
 

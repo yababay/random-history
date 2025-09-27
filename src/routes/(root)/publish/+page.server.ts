@@ -1,5 +1,5 @@
 import { API_KEY } from '$env/static/private'
-import { tgDebug } from '$lib/server/telegram.js'
+import { tgDebug } from '$lib/server.prev/telegram.js'
 
 export const actions = {
     default: async ({ request, fetch }) => {

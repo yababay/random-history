@@ -1,7 +1,7 @@
 <script lang="ts">
 
 	import { page } from '$app/state'
-	import favicon from '$lib/assets/dice-12.svg'
+	import favicon from '$lib/assets/favicon.svg'
 	import { BareLayout } from '@yababay67/sveltekit-components'
 
 	const isRoot = page.url.pathname === '/'

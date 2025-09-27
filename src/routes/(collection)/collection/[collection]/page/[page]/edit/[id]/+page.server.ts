@@ -1,6 +1,6 @@
 import { dev } from '$app/environment'
 import { REDIS_PREFIX } from '$env/static/private'
-import { checkConnection, saveRecord } from '$lib/server'
+import { checkConnection, saveRecord } from '$lib/server.prev'
 import { redirect } from '@sveltejs/kit'
 
 export const load = async ({ params }) => {

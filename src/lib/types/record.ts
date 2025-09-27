@@ -1,8 +1,8 @@
-export type RandomHistory = { 
-    link: string
+export type RandomHistoryRecord = { 
+    id: number 
     message: string
-    tags?: string[] | string
-    collection?: string
+    collection: string
+    link?: string
     author?: string
-    id?: number 
+    tags?: string[] | string
 }

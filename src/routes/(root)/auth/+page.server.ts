@@ -1,4 +1,4 @@
-import { tgDebug } from "$lib/server/telegram.js"
+import { tgDebug } from "$lib/server.prev/telegram.js"
 import { redirect } from "@sveltejs/kit"
 
 export const actions = {

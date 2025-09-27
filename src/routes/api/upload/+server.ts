@@ -1,4 +1,4 @@
-import { getNextPictureId, uploadFromBlob } from '$lib/server'
+import { getNextPictureId, uploadFromBlob } from '$lib/server.prev'
 
 export async function POST ({request}){
     const body = await request.text()

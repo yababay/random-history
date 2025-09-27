@@ -1,6 +1,6 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 
-import type { UsedKeys } from "$lib/types";
+import type { UsedKeys } from "$lib/types.prev";
 
 // for information about these interfaces
 declare global {

@@ -1,4 +1,4 @@
-import { checkConnection } from '$lib/server'
+import { checkConnection } from '$lib/server.prev'
 import { REDIS_PREFIX } from '$env/static/private'
 import { PUBLIC_ROWS_PER_PAGE } from '$env/static/public'
 

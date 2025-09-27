@@ -1,10 +1,10 @@
 import { readFileSync, existsSync } from 'fs'
 import { building } from '$app/environment'
 import { API_KEY, YANDEX_APPLICATION_SECRET, YANDEX_CLIENT_ID, YANDEX_TRUSTED_USER, USED_KEYS_FN } from '$env/static/private'
-import { tgDebug, distillCollection } from '$lib/server'
+import { tgDebug, distillCollection } from '$lib/server.prev'
 import { redirect } from '@sveltejs/kit'
 import axios from 'axios'
-import type { UsedKeys, Collection } from '$lib/types'
+import type { UsedKeys, Collection } from '$lib/types.prev'
 
 const loginUrl = `https://login.yandex.ru/info?format=json&jwt_secret=${YANDEX_APPLICATION_SECRET}`
 let usedKeys: UsedKeys = {}

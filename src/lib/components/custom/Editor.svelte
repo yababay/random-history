@@ -1,13 +1,16 @@
 <script lang="ts">
 
-    import Slots from '$lib/components/Slots.svelte'
-    import Image from '$lib/components/Image.svelte'
-    import { COLLECTIONS, getTitle, type Collection, type RandomHistory } from '$lib/types'
-    import { Fieldset, Submit, Textarea, WideInput } from '@yababay67/sveltekit-components'
-    import Tags from '$lib/components/tags/index.svelte'
+    import { COLLECTIONS, getTitle, type Collection, type RandomHistoryRecord } from '$lib/types'
+    import Slots from '$lib/components/custom/Slots.svelte'
+    import Image from '$lib/components/custom/Image.svelte'
+    import Fieldset from '$lib/components/Fieldset.svelte'
+    import Submit from '$lib/components/Submit.svelte'
+    import Textarea from '$lib/components/input/Textarea.svelte'
+    import WideInput from '$lib/components/input/wide/Input.svelte'
+    import Tags from '$lib/components/custom/tags/index.svelte'
 
-    export let record: RandomHistory = { message: '', link: '/stub.png', tags: new Array<string>()}
     export let collection: Collection = 'drafts'
+    export let record: RandomHistoryRecord = { id: 0, collection, message: '', link: '/stub.png', tags: new Array<string>()}
     export let rows = 20
     import { STUB } from './store'
 

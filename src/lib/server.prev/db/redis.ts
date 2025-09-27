@@ -1,6 +1,6 @@
 import { createClient, type RedisClientType } from 'redis'
 import { REDIS_PORT, REDIS_PREFIX } from '$env/static/private'
-import type { Collection } from '$lib/types'
+import type { Collection } from '$lib/types.prev'
 
 let client: RedisClientType
 
