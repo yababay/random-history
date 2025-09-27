@@ -22,3 +22,14 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Me
+.pump
+.data
+.svelte-kit
+.vite
+.env
+.env.*
+authorized_key.json
+build
+src/lib
