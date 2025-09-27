@@ -8,8 +8,9 @@
     "yc:iam": "yc iam create-token",
     "pump": "ts-node --project tsconfig-pump.json scripts/pump.ts",
     "pump-vk": "ts-node --project tsconfig-pump.json scripts/pump-vk.ts",
-    "msg": "ts-node --project tsconfig-pump.json scripts/message.ts",
-    "vk": "ts-node --project tsconfig-pump.json scripts/vk.ts",
+    "msg":  "ts-node --project tsconfig-pump.json scripts/message.ts",
+    "vk":   "ts-node --project tsconfig-pump.json scripts/vk.ts",
+    "tags": "ts-node --project tsconfig-pump.json scripts/tags.ts",
     "quot": "ts-node --project tsconfig-pump.json scripts/quotations.ts",
     "deploy": "tsc && scripts/deploy.sh"
   },
