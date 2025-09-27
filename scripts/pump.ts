@@ -1,6 +1,6 @@
 import { Client } from 'pg'
 import dotenv from 'dotenv'
-import { getDriver, getYDBTimestamp, RandomHistory } from '../src/server/ydb'
+import { getDriver, getYDBTimestamp, RandomHistory } from '../src/lib/server/ydb'
 
 
 dotenv.config()

@@ -6,10 +6,11 @@
   "scripts": {
     "build": "tsc",
     "yc:iam": "yc iam create-token",
-    "psql":   "psql -h localhost -U random_history -d random_history",
-    "pump":   "ts-node --project tsconfig-pump.json scripts/pump.ts",
-    "msg":    "ts-node --project tsconfig-pump.json scripts/message.ts",
-    "quot":   "ts-node --project tsconfig-pump.json scripts/quotations.ts",
+    "pump": "ts-node --project tsconfig-pump.json scripts/pump.ts",
+    "pump-vk": "ts-node --project tsconfig-pump.json scripts/pump-vk.ts",
+    "msg": "ts-node --project tsconfig-pump.json scripts/message.ts",
+    "vk": "ts-node --project tsconfig-pump.json scripts/vk.ts",
+    "quot": "ts-node --project tsconfig-pump.json scripts/quotations.ts",
     "deploy": "tsc && scripts/deploy.sh"
   },
   "keywords": [],
@@ -35,6 +36,7 @@
     "pg": "^8.16.3",
     "telegraf": "^4.16.3",
     "uuid": "^8.3.2",
+    "vk-io": "^4.10.0",
     "ydb-sdk": "^5.11.1"
   }
 }

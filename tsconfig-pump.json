@@ -5,7 +5,7 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "outDir": ".dist",
+    "outDir": ".pump",
     "sourceMap": true,
     "removeComments": true
   },

@@ -1,9 +1,9 @@
 import { Telegram } from 'telegraf'
 import type { ParseMode } from 'telegraf/types'
 import type { RandomHistoryRecord } from '../types'
-//import dotenv from 'dotenv'
+import dotenv from 'dotenv'
 
-//dotenv.config()
+dotenv.config()
 
 const { TELEGRAM_BOT_TOKEN, TELEGRAM_CHANNEL, TELEGRAM_ADMIN_CHANNEL } = process.env
 

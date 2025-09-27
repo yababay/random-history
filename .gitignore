@@ -26,6 +26,7 @@ vite.config.ts.timestamp-*
 .data/
 yc-ydb-connect-from-serverless-function/
 .dist/
+.pump/
 dist/
 ydb/
 authorized_key.json
