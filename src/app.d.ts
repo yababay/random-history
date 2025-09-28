@@ -1,13 +1,11 @@
-// See https://svelte.dev/docs/kit/types#app.d.ts
-
-import type { UsedKeys } from "$lib/types.prev";
+import YDB from 'ydb-sdk'
 
 // for information about these interfaces
 declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			usedKeys: UsedKeys
+			driver: YDB.Driver
 		}
 		// interface PageData {}
 		// interface PageState {}

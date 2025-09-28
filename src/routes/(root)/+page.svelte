@@ -1,6 +1,6 @@
 <script>
 
-    import Editor from '$lib/components/Editor.svelte'
+    import Editor from '$lib/components/custom/Editor.svelte'
     import { COLLECTIONS, getIcon, getTitle } from "$lib/types";
 
 </script>

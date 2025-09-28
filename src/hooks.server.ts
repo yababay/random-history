@@ -1,5 +1,21 @@
-import { readFileSync, existsSync } from 'fs'
 import { building } from '$app/environment'
+import { getDriver } from '$lib/server'
+import YDB from 'ydb-sdk'
+//import type { Driver } from 'ydb-sdk'
+
+let driver: YDB.Driver
+
+if(!building) {
+    driver = await getDriver()
+}
+
+export async function handle({ event, resolve }) {
+    const { locals } = event
+    locals.driver = driver
+    return await resolve(event)
+}
+
+/*import { readFileSync, existsSync } from 'fs'
 import { API_KEY, YANDEX_APPLICATION_SECRET, YANDEX_CLIENT_ID, YANDEX_TRUSTED_USER, USED_KEYS_FN } from '$env/static/private'
 import { tgDebug, distillCollection } from '$lib/server.prev'
 import { redirect } from '@sveltejs/kit'
@@ -39,4 +55,4 @@ export async function handle({ event, resolve }) {
         throw redirect(302, '/login') 
     }
     return await resolve(event)
-}
+}*/

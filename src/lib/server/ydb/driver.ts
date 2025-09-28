@@ -1,8 +1,10 @@
-import {Driver, TokenAuthService} from 'ydb-sdk'
+import YDB from 'ydb-sdk'
 import axios from 'axios'
 import dotenv from 'dotenv'
 
 dotenv.config()
+
+const {Driver, TokenAuthService} = YDB
 
 const { YDB_ACCESS_TOKEN_CREDENTIALS, ENDPOINT, DATABASE, YANDEX_OAUTH_TOKEN } = process.env
 

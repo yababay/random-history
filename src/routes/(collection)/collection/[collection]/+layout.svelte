@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import { LayoutWithMenu } from '@yababay67/sveltekit-components'
+    import LayoutWithMenu from '$lib/components/layout/WithMenu.svelte'
     import { collectionsMenu, getTitle, type Collection } from '$lib/types'
 	import favicon from '$lib/assets/favicon.svg'
 
@@ -15,11 +15,11 @@
             icon: 'collection-fill',
             items: collectionsMenu
         },
-        {
+        /*{
             title: 'Публиковать',
             htef:  '/publish',
             icon:  'caret-right'            
-        },
+        },*/
         {
             title: 'Github',
             htef:  'https://github.com/yababay/random-history',

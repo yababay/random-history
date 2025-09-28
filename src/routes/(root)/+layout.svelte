@@ -2,7 +2,7 @@
 
 	import { page } from '$app/state'
 	import favicon from '$lib/assets/favicon.svg'
-	import { BareLayout } from '@yababay67/sveltekit-components'
+	import BareLayout from '$lib/components/layout/Bare.svelte'
 
 	const isRoot = page.url.pathname === '/'
 

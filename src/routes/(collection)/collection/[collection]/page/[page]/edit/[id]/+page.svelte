@@ -1,9 +1,9 @@
 <script lang="ts">
 
-    import Editor from '$lib/components/Editor.svelte'
-    import { type Collection, type RandomHistory } from '$lib/types'
+    import Editor from '$lib/components/custom/Editor.svelte'
+    import { type Collection, type RandomHistoryRecord } from '$lib/types'
     
-    export let data: { record: RandomHistory, collection: Collection }
+    export let data: { record: RandomHistoryRecord, collection: Collection }
 
     const { collection, record } = data
 

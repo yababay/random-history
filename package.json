@@ -8,7 +8,7 @@
 		"bro": "BROWSER=firefox vite dev --open",
 		"build": "vite build",
 		"git:local": "read -p 'Суть коммита: ' COMMIT; git add . ; git commit -am $COMMIT",
-		"git:remote": "git push origin scratch",
+		"git:remote": "git push origin main",
 		"git": "npm run git:local && npm run git:remote",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
@@ -55,6 +55,7 @@
 		"redis": "^5.8.2",
 		"showdown": "^2.1.0",
 		"telegraf": "^4.16.3",
-		"vk-io": "^4.9.1"
+		"vk-io": "^4.9.1",
+		"ydb-sdk": "^5.11.1"
 	}
 }
