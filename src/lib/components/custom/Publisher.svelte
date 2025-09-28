@@ -1,13 +1,11 @@
 <script lang="ts">
 
     import { COLLECTIONS, getTitle } from "$lib/types"
-    import { Fieldset } from "@yababay67/sveltekit-components"
-
-    const legend = 'Из коллекции:'
+    import Fieldset from "$lib/components/Fieldset.svelte"
 
 </script>
 
-<Fieldset {legend}>
+<Fieldset legend="Из коллекции:">
     <form method="post" class="w-100">
         <div class="row w-100 mt-3 mb-3">
             <div class="col-4 d-flex justify-content-center">
@@ -25,11 +23,11 @@
                     <input class="form-check-input" type="checkbox" role="switch" id="admin" name="admin" value="admin">
                     <label class="form-check-label" for="admin">в адм. канал</label>
                 </div>
-                <!-- div class="form-check form-switch me-5">
+                <div class="form-check form-switch me-5">
                     <input class="form-check-input" type="checkbox" role="switch" id="vk" name="vk">
                     <label class="form-check-label" for="vk">в группу ВК</label>
-                </div -->
-                <button class="btn btn-primary" type="submit">Публиковать</button>
+                </div>
+                <button class="btn btn-primary" type="submit" formaction="?/publish">Публиковать</button>
             </div>
         </div>
     </form>

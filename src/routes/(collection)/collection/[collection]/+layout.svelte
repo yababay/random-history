@@ -1,8 +1,11 @@
 <script lang="ts">
 
+    import { page } from '$app/state'
     import LayoutWithMenu from '$lib/components/layout/WithMenu.svelte'
     import { collectionsMenu, getTitle, type Collection } from '$lib/types'
 	import favicon from '$lib/assets/favicon.svg'
+
+	const isLocal = page.url.hostname === 'localhost'
 
     export let data: { collection: Collection }
 
@@ -15,22 +18,22 @@
             icon: 'collection-fill',
             items: collectionsMenu
         },
-        /*{
+        {
             title: 'Публиковать',
-            htef:  '/publish',
+            href:  '/publish',
             icon:  'caret-right'            
-        },*/
+        },
         {
             title: 'Github',
-            htef:  'https://github.com/yababay/random-history',
+            href:  'https://github.com/yababay/random-history',
             icon:  'github'            
         },
         {
             title: 'Телеграм',
-            htef: 'https://t.me/random_historical_picrures',
+            href: 'https://t.me/random_historical_picrures',
             icon: 'telegram'            
         }
-    ]
+    ].filter(({href}) => isLocal || !href?.includes('/publish'))
 
 </script>
 

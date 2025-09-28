@@ -1,9 +1,6 @@
 import { VK } from 'vk-io'
-import dotenv from 'dotenv'
-
-dotenv.config()
-
-const { VK_API_GROUP_KEY, VK_DEFAULT_CHAT } = process.env
+import { VK_API_GROUP_KEY, VK_DEFAULT_CHAT } from '$env/static/private'
+import { dev } from '$app/environment'
 
 if(!(VK_API_GROUP_KEY && VK_DEFAULT_CHAT)) throw 'bad env'
 
@@ -21,7 +18,7 @@ export async function postMessageToChat(message: string, url: string, chat_id = 
             attachment: await attachmentForChat(url),
             random_id: getRandomId()
         });
-        console.log(`Message successfully sent to chat ${chat_id}`);
+        if(dev) console.log(`Message successfully sent to chat ${chat_id}`);
     } catch (error) {
         console.error('Error sending message:', error);
     }

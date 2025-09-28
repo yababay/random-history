@@ -47,7 +47,7 @@
                 <img src={link} alt="preview" class="w-100 p-3">
                 <input name="id" type="hidden" value={id}/>
             {:else}
-                <Image {link} /> 
+                <Image /> 
             {/if}
         </div>
         <div slot="right" class="w-100 h-100 d-flex flex-direction-column justify-content-center align-items-center">
@@ -76,9 +76,17 @@
                 </div>
                 <div class="w-100 d-flex align-items-start mt-3 mb-3 ps-3 pe-3">
                     <Submit>
-                        <div class="form-check d-inline-block me-5" slot="options">
-                            <input class="form-check-input" type="checkbox" id="vk" name="vk" value="vk">
-                            <label class="form-check-label" for="vk">в группу ВК</label>
+                        <div slot="options" class="d-inline-block">
+                            {#if id}
+                                <div class="form-check d-inline-block me-5">
+                                    <input class="form-check-input" type="checkbox" id="ts" name="ts" value="ts" checked>
+                                    <label class="form-check-label" for="vk">обновить дату</label>
+                                </div>
+                            {/if}
+                            <div class="form-check d-inline-block me-5">
+                                <input class="form-check-input" type="checkbox" id="vk" name="vk" value="vk">
+                                <label class="form-check-label" for="vk">в группу ВК</label>
+                            </div>
                         </div>                    
                     </Submit>
                 </div>

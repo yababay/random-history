@@ -1,5 +1,8 @@
 import YDB from 'ydb-sdk'
 import type { RandomHistoryRecord } from '$lib'
+import { dev } from '$app/environment';
+import { sendMessage } from '../telegram';
+import { postMessageToChat } from '../vk';
 
 const { Column, TableDescription, Types, Ydb } = YDB
 
@@ -13,9 +16,17 @@ export class VKontakte extends TableDescription {
 } 
 
 export const nextIdFromCollection = async (session: YDB.TableSession, collection: string = 'vkontakte') => {
-    const result = await session.executeQuery(`select id from ${collection} order by ts limit 1`)
+
+    const vk = collection === 'vk'
+    const query = vk 
+    ?
+    `select id from vkontakte order by ts limit 1`
+    :
+    `select id from messages where collection = '${collection}' order by ts limit 1`
+
+    const result = await session.executeQuery(query)
     const id = intFromResultSets(result)
-    await session.executeQuery(`update ${collection} set ts = ${getYDBTimestamp()} where id = ${id}`)
+    await session.executeQuery(`update ${vk ? 'vkontakte' : 'messages'} set ts = ${getYDBTimestamp()} where id = ${id}`)
     return id
 }
 
@@ -44,6 +55,33 @@ export class RandomHistory extends TableDescription {
     }
 }
 
+export const publishRecord = async (session: YDB.TableSession, data: FormData) => {
+
+        const coll = data.get('collection')?.toString().trim()
+        const vk = data.get('vk')?.toString().trim()
+        const collection = vk || coll
+        const admin = data.get('admin')?.toString().trim()
+
+        if(typeof collection !== 'string') throw 'no collection'
+
+        const id = await nextIdFromCollection(session, collection)
+        const record = await getRecordOrCollection(session, id)
+        if(Array.isArray(record)) throw 'no arrays here'
+
+        if(collection === 'vk') {
+            const { link, message } = record
+            if(!(link && message)) {
+                console.log('no link')
+                return
+            }
+            await postMessageToChat(message, link)
+        }
+        else await sendMessage(record, !!admin)
+        
+        if(dev) console.log(`message with id=${id} of collection ${collection} is published`)
+        return id
+}
+
 export const saveRecord = async (session: YDB.TableSession, data: FormData) => {
   let id: string | number | undefined = data.get('id')?.toString()
   const collection = data.get('collection')?.toString()
@@ -51,7 +89,7 @@ export const saveRecord = async (session: YDB.TableSession, data: FormData) => {
   const link = data.get('link')?.toString().trim()
   const author = data.get('author')?.toString().trim()
   const _tags = data.get('tags')?.toString().trim()
-  const vk = !!data.get('vk')?.toString().trim()
+  const vk = !!data.get('vk')
   id = id ? +id : (await getMaxId(session)) + 1
   if(!(message && collection && !isNaN(id))) throw 'bad id or message or collection'
   const columns = ['id', 'message', 'collection']
@@ -72,11 +110,12 @@ export const saveRecord = async (session: YDB.TableSession, data: FormData) => {
     columns.push('link')
     values.push(`'${link}'`)
   }
-  if(author) {
+  else if(author) {
     columns.push('author')
     values.push(`'${distill(author)}'`)
   }
   await session.executeQuery(`upsert into messages (${columns.join(', ')}) values (${values.join(', ')})`)
+  if(vk) await session.executeQuery(`upsert into vkontakte (id, ts) values (${id}, ${getYDBTimestamp()})`)
   return +id
 }
 
@@ -113,6 +152,7 @@ export const getRecordOrCollection = async(session: YDB.TableSession, where: str
       if(typeof id !== 'number') throw 'bad id'
       if(typeof message !== 'string') throw 'bad message'
       if(typeof collection !== 'string') throw 'bad collection'
+      if(!(link || author)) throw 'presense of link or author is obligate'
       const props: RandomHistoryRecord = { id, message, collection }
       if(typeof link === 'string') props['link'] = link
       if(typeof author === 'string')  props['author'] = author
@@ -150,7 +190,7 @@ const getRecordCount = async (session: YDB.TableSession, table: string) => {
 }
 
 export const getMaxId = async (session: YDB.TableSession, table = 'messages') => {
-  const query = `select id from ${table} order by ts desc limit 1`
+  const query = `select max(id) from ${table}`
   const result = await session.executeQuery(query)
   return intFromResultSets(result)
 }

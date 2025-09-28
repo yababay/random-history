@@ -24,10 +24,11 @@ export const actions = {
         const { pathname } = url
         const data = await request.formData()
         const { driver } = locals
+        const ts = !!data.get('ts')
 
         const id = await driver.tableClient.withSession(async (session: YDB.TableSession) => {
             const id = await saveRecord(session, data)
-            await setLatest(session, id)
+            if(ts) await setLatest(session, id)
             return id
         })
     

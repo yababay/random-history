@@ -1,7 +1,11 @@
 <script>
 
+    import { page } from '$app/state'
     import Editor from '$lib/components/custom/Editor.svelte'
+    import Publisher from '$lib/components/custom/Publisher.svelte';
     import { COLLECTIONS, getIcon, getTitle } from "$lib/types";
+
+	const isLocal = page.url.hostname === 'localhost'
 
 </script>
 
@@ -17,4 +21,8 @@
 
 <h5 class="mb-3 mt-3">Или создайте новый материал:</h5>
 
-<Editor rows={15} />
+{#if isLocal}
+    <Editor rows={15} />
+{:else}
+    <Publisher />
+{/if}
