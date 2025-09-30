@@ -19,7 +19,7 @@
     const token = getParam('access_token')
     const age = getParam('expires_in')
 
-    let hidden = true
+    let hidden = $state(true)
 
     onMount(() => hidden = false)
 
