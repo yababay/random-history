@@ -36,14 +36,15 @@ export async function handler(event: YC.CloudFunctionsHttpEvent) {
       }
       await postMessageToChat(message, link)
       return id
-  }
-  else {
-      const record = await getNextRecord(session, collection)
-      const { id } = record
-      await sendMessage(record)
-      await setLatest(session, id)
-      return id
-  }
+    }
+    else {
+        const record = await getNextRecord(session, collection)
+        const { id } = record
+        console.log('publishing', id, '…')
+        await sendMessage(record)
+        await setLatest(session, id)
+        return id
+    }
 })
 
   await driver.destroy()

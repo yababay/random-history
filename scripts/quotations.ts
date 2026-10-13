@@ -89,61 +89,6 @@ const date = new Date()
                 console.log(err)
             }
         }
-
-        /*
-        const query = `select max(id) from messages where collection = 'quotations'`
-        const { resultSets } = await session.executeQuery(query);
-        const [ resultSet ]  = resultSets
-        const { rows } = resultSet
-        if(!(rows && rows.length)) throw 'no rows'
-        const [ row ] = rows
-        const { items } = row
-        if(!(items && items.length)) throw 'no items'
-        const [ item ] = items
-        const { int32Value, int64Value } = item
-        let id: number | Long = int32Value || int64Value || MAX_ID
-        if(typeof id !== 'number') throw 'no first id'
-        //id++
-        console.log('from', id)
-
-        while(quotations.has(id)) {
-            await new Promise((yep) => setTimeout(() => {
-                    yep(true)
-                }, 1000)
-            )        
-            let query = `upsert into messages (id, message, author, collection, ts) values `
-            const values = new Array<string>()
-            for(let i = 0; i < 20 && quotations.has(id); i++){ 
-                id++ // = id + i
-                const quot = quotations.get(id)
-                if(!quot) break
-                const { russian, ts } = quot
-                const { author, caption } = russian
-                if(!(author && caption)) continue
-                const distill = (s: string) => s.replaceAll("'", "`")
-                values.push(`(${id}, '${distill(caption)}', '${distill(author)}', '${QUOTATIONS_WORD}', ${getYDBTimestamp(ts)})`)
-            }
-            if(!values.length) break
-            query += values.join(', ')
-            console.log(query.slice(0, 80))
-            try {
-                await session.executeQuery(query)
-            }
-            catch(err){
-                const _err = err.toString().slice(0, 200).toUpperCase()
-                if(_err.includes('EXHAUSTED')) console.log('too many requests')
-                else {
-                    console.log(query)
-                    console.error(_err)
-                }
-                await new Promise((yep) => setTimeout(() => {
-                    yep(true)
-                }, 300000)
-            )   
-            }
-            //id++ //if(++id % 2) continue
-        }
-        */
     })
     await driver.destroy()
 })()
