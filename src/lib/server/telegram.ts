@@ -38,7 +38,14 @@ export const sendMessage = async (content: RandomHistoryRecord) => {
     if(typeof link !== 'string') throw 'link or author must be defined'
     tags = Array.isArray(tags) ? tags.join(' ') : tags
     tags = tags?.trim()
-    let caption = message.trim() + (tags ? `\n\n${tags}` : '')
+    let caption = message.trim()
+    if(caption.length > 80){
+    	const arr = caption.split(/[\r\n]+/)
+	caption = arr[0]
+	if(caption.length > 80) caption = caption.slice(0, 79) + '…'
+    }   
+    caption += (tags ? `\n\n${tags}` : '')
+
     const options: MessageOptions = { ...OPTIONS, caption }
     await TG.sendPhoto(channel, link, options)
 }
