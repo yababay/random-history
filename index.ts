@@ -5,7 +5,7 @@ export async function handler(event: YC.CloudFunctionsHttpEvent) {
 
   const { queryStringParameters } = event
 
-  let collection: string
+  let collection: string | null = null
 
   if (queryStringParameters && typeof queryStringParameters.collection === 'string') collection = queryStringParameters.collection
   else {
